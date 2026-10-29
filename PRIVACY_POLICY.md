@@ -1,0 +1,36 @@
+# 📋 個人資料收集聲明與私隱告示 (Personal Information Collection Statement - PICS)
+
+**發布日期:** 2026 年 8 月  
+**適用對象:** Enterprise Demo Corp 使用本 KPI 評核系統之全體員工、主管與評核人員
+
+本聲明旨在向您說明 Enterprise Demo Corp（以下簡稱「本公司」）在您使用 **`EnterpriseDemo-Site-KPI`** 系統時，如何處理及保障您的個人資料，符合香港法例第 486 章《個人資料（私隱）條例》（PDPO）及相關國際標準。
+
+---
+
+## 1. 收集個人資料之目的 (Purpose of Collection)
+
+本系統收集之個人資料（包括但不限於：員工姓名、員工編號、所屬項目/地盤、出勤紀錄、工程考核數據及評語），僅用於以下法定與業務合理目的：
+1. 評估高級管工及地盤同事之月度工作績效與 KPI 指標達成率。
+2. 根據評核結果核算績效獎金發放比例或制定績效改善計劃（PIP）。
+3. 滿足本公司 ISO 9001:2015 品質管理體系條款 7.5 之工程管理追溯與審核要求。
+
+---
+
+## 2. 資料保留與無留存聲明 (Data Retention & Zero Storage)
+
+- **會話期暫存 (In-Memory Processing):** 系統僅在您填寫與生成 PDF 期間於記憶體內處理資料。
+- **零伺服器儲存 (Zero Server Storage):** 系統伺服器**不會**在資料庫或磁碟儲存您輸入的任何個人資料。PDF 生成並供下載後，記憶體即告釋放。
+- **本地與公司歸檔:** 下載後的 PDF 檔案將依據本公司內部《員工手冊》及 HR 資料保存政策，由 HR 部門於授權之安全伺服器內保存。
+
+---
+
+## 3. 資料查閱及更正權利 (Access and Correction Rights)
+
+根據香港《個人資料（私隱）條例》，您有權要求查閱及更正本公司所持有關於您的個人資料。如欲行使上述權利，請書面聯絡：
+
+- **收件單位:** Enterprise Demo Corp 人力資源部 (HR Department)
+- **聯絡方式:** `hr@enterprisedemo.com`
+- **地址:** Enterprise Demo 總辦事處
+```<ElicitationsGroup>
+  <FollowUp>完成這份 `PRIVACY_NOTICE.md` 後，是否需要我繼續幫你處理 `SECURITY.md` 的脫殼洗白？</FollowUp>
+</ElicitationsGroup>
