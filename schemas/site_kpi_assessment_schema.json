@@ -1,0 +1,55 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://demo-enterprise.github.io/EnterpriseDemo-Site-KPI/schemas/site_kpi_assessment_schema.json",
+  "title": "EnterpriseDemo Site KPI Assessment Payload Schema",
+  "description": "ISO 9001 & ISO 42001 compliant data contract for Senior Foreman KPI evaluation.",
+  "type": "object",
+  "required": [
+    "emp_name",
+    "emp_id",
+    "project_site",
+    "supervisor",
+    "eval_month",
+    "sign_date",
+    "evidence_ref",
+    "scores",
+    "total_score",
+    "final_grade",
+    "veto_triggered"
+  ],
+  "properties": {
+    "emp_name": { "type": "string", "minLength": 1 },
+    "emp_id": { "type": "string", "pattern": "^[A-Z0-9-]+$" },
+    "project_site": { "type": "string" },
+    "supervisor": { "type": "string" },
+    "eval_month": { "type": "string" },
+    "sign_date": { "type": "string", "format": "date" },
+    "evidence_ref": {
+      "type": "string",
+      "description": "ISO 9001 Clause 7.5 traceable audit document reference"
+    },
+    "scores": {
+      "type": "object",
+      "properties": {
+        "s1_1": { "type": "number", "minimum": 0, "maximum": 8 },
+        "s1_2": { "type": "number", "minimum": 0, "maximum": 8 },
+        "s1_3": { "type": "number", "minimum": 0, "maximum": 4 },
+        "s2_1": { "type": "number", "minimum": 0, "maximum": 15 },
+        "s2_2": { "type": "number", "minimum": 0, "maximum": 12 },
+        "s2_3": { "type": "number", "minimum": 0, "maximum": 8 },
+        "s3_1": { "type": "number", "minimum": 0, "maximum": 8 },
+        "s3_2": { "type": "number", "minimum": 0, "maximum": 7 },
+        "s4_1": { "type": "number", "minimum": 0, "maximum": 12 },
+        "s4_2": { "type": "number", "minimum": 0, "maximum": 10 },
+        "s4_3": { "type": "number", "minimum": 0, "maximum": 8 }
+      }
+    },
+    "total_score": { "type": "number", "minimum": 0, "maximum": 100 },
+    "final_grade": {
+      "type": "string",
+      "enum": ["A級（卓越）", "B級（良好）", "C級（合格）", "D級（待改善）", "F級（不合格）"]
+    },
+    "veto_triggered": { "type": "boolean" },
+    "emp_agree": { "type": "string", "enum": ["同意", "不同意"] }
+  }
+}
