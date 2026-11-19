@@ -1,0 +1,71 @@
+{
+  "definition": {
+    "$schema": "https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2016-06-01/workflowdefinition.json#",
+    "contentVersion": "1.0.0.0",
+    "metadata": {
+      "flowName": "EnterpriseDemo-SiteKPI-Approval-And-CAPA",
+      "complianceStandard": "ISO 9001:2015 Clause 7.5 & ISO/IEC 42001 HITL",
+      "description": "Routes generated KPI PDF report for 4-party sign-off and triggers CAPA/PIP workflow if Grade D/F or Veto is detected."
+    },
+    "triggers": {
+      "When_KPI_PDF_Uploaded_To_Staging_Library": {
+        "type": "ApiConnection",
+        "inputs": {
+          "host": { "connection": { "name": "@parameters('$connections')['sharepointonline']['connectionId']" } },
+          "method": "get",
+          "path": "/datasets/@{encodeURIComponent('https://demo-tenant.sharepoint.com/sites/HR-Governance')}/tables/@{encodeURIComponent('KPI_Staging_Library')}/onnewfile"
+        }
+      }
+    },
+    "actions": {
+      "Parse_KPI_Metadata": {
+        "type": "ParseJson",
+        "inputs": {
+          "content": "@triggerBody()",
+          "schema": { "$ref": "../schemas/site_kpi_assessment_schema.json" }
+        },
+        "runAfter": {}
+      },
+      "Check_Veto_Or_Low_Performance": {
+        "type": "If",
+        "expression": {
+          "or": [
+            { "equals": ["@body('Parse_KPI_Metadata')?['veto_triggered']", true] },
+            { "less": ["@body('Parse_KPI_Metadata')?['total_score']", 70] }
+          ]
+        },
+        "actions": {
+          "Trigger_ISO_CAPA_And_PIP_Review": {
+            "type": "ApiConnection",
+            "inputs": {
+              "body": {
+                "assignedTo": "hr-compliance@companydemo.com",
+                "title": "Action Required: ISO CAPA / PIP Review for @{body('Parse_KPI_Metadata')?['emp_id']}",
+                "details": "Veto triggered or score below 70. Initiate 30-60 day PIP review."
+              },
+              "path": "/approvals"
+            }
+          }
+        },
+        "else": {
+          "actions": {
+            "Route_Standard_4_Party_SignOff": {
+              "type": "ApiConnection",
+              "inputs": {
+                "body": {
+                  "assignedTo": "supervisor@companydemo.com;hr@companydemo.com",
+                  "title": "4-Party Sign-Off: Site KPI Report (@{body('Parse_KPI_Metadata')?['emp_id']})",
+                  "details": "Verify ISO 7.5 Evidence Ref: @{body('Parse_KPI_Metadata')?['evidence_ref']}"
+                },
+                "path": "/approvals"
+              }
+            }
+          }
+        },
+        "runAfter": {
+          "Parse_KPI_Metadata": ["Succeeded"]
+        }
+      }
+    }
+  }
+}
